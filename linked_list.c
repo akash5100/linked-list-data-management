@@ -6,8 +6,12 @@
 
 struct node
 {
+    //int number;        /*unique account number*/
+    //char name[20];     /*contains name*/  
+    //char phone[15];    /*contains phone number*/
+    //char email[20];    /*contains email address*/
     int data;
-    struct node *next;
+    struct node *next; 
 };
 typedef struct node Node;
 
