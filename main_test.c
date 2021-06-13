@@ -1,4 +1,7 @@
-#include "helper.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "linked_list.h"
+
 
 int main(void)
 {
@@ -23,7 +26,7 @@ int main(void)
         case 'a': ;
             int t;
             printf("enter number to append: ");
-            scanf("%i\n",&t);
+            scanf("%i",&t);
             if (head == NULL)
             {
                 head = createNode(t);

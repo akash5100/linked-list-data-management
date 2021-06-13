@@ -1,8 +1,10 @@
 #makefile
-helper: helper.c helper.h
-	gcc -g helper.c helper.h
-	./a.out
+main_test: main_test.o linked_list.o
+	gcc -g main_test.o linked_list.o -o maintest
+
+linked_list.o: linked_list.c linked_list.h
+	gcc -g -c linked_list.c
 
 clean:
-	rm *.out *.gch
+	rm *.o maintest
 	

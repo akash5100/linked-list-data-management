@@ -1,22 +1,15 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 
-typedef struct node Node;
+#include "linked_list.h"
 
 struct node
 {
     int data;
     struct node *next;
 };
-
-//signature
-Node* createNode(int data);
-Node* insert(int data,Node *head);
-Node* DELETE(int data, Node *head);
-void search(Node *head);
-void Traverse(Node *head);
-void destroy_ll(Node *head);
-
+typedef struct node Node;
 
 // create single node with the `next` pointer pointing `NULL` ✔
 Node* createNode(int data)
