@@ -56,6 +56,10 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head)
 }
 
 //delete node
+
+// not working 
+
+
 Node* DELETE(int number, Node *head)
 {
     Node* temp = head;

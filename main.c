@@ -5,6 +5,17 @@
 
 #include "linked_list.h"
 
+/*  READ ME
+
+
+*   promt user until user enter Q
+*   if a single char doesnt work then try same character twice
+*   example:
+*   enter: p (doesnt work)
+*   enter: pp (will work) 
+
+
+*/
 
 int main(void)
 {
@@ -24,7 +35,7 @@ int main(void)
         case 'p':
             if (head == NULL){
                 printf("Sorry, 0 contact found\n");
-                getchar();
+                getchar();  //get char to from user to continue
             }
             else{
                 Traverse(head);
@@ -64,7 +75,7 @@ int main(void)
             if (head == NULL)
             {
                 printf("contact list empty.\n");
-                getchar();
+                getchar(); //get char to from user to continue
             }
             else
             {
@@ -86,7 +97,7 @@ int main(void)
 
         default:
             printf("\ninvalid input\n your input should be P, D, A or Q\n");
-            getchar();
+            getchar();  //get char to from user to continue
             break;
         }
     }
