@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "linked_list.h"
 
 struct node
 {
-    //int number;        /*unique account number*/
-    //char name[20];     /*contains name*/  
-    //char phone[15];    /*contains phone number*/
-    //char email[20];    /*contains email address*/
-    int data;
+    int number;        /*unique account number*/
+    char name[20];     /*contains name*/  
+    char phone[15];    /*contains phone number*/
+    char email[20];    /*contains email address*/
+    //int data;
     struct node *next; 
 };
 typedef struct node Node;
 
 // create single node with the `next` pointer pointing `NULL` ✔
-Node* createNode(int data)
+Node* createNode(int number,char* name,char* phone, char* email)
 {
     Node *temp= malloc(sizeof(Node));
     //check if pointer is null
@@ -26,7 +27,10 @@ Node* createNode(int data)
       exit(1);
     }
 
-    temp->data=data;
+    temp->number = number;
+    strcpy(temp->name,name);
+    strcpy(temp->email,email);
+    strcpy(temp->phone,phone);
     temp->next=NULL;
     return temp; //returns a pointer to a node with data and NUll pointer
 }
@@ -34,10 +38,10 @@ Node* createNode(int data)
 
 // insert node
 
-Node* insert(int data,Node *head)
+Node* insert(int number,char* name, char* email, char* phone,Node *head)
 {
     if (head == NULL)
-        return createNode(data);
+        return createNode(number,name,phone,email);
         
     Node* temp = head;
     //make temp pointer point to end
@@ -45,29 +49,45 @@ Node* insert(int data,Node *head)
     {
         temp = temp->next;
     }
-    Node* temp2 = createNode(data);
+    Node* temp2 = createNode(number,name,phone,email);
     temp->next = temp2;
-        
+
     return head;
 }
 
 //delete node
-Node* DELETE(int data, Node *head)
+Node* DELETE(int number, Node *head)
 {
     Node* temp = head;
-    Node* temp2 = head;
-    while (temp2->data < data)
-    {
-        temp2 = temp2->next;
-        if (temp2->data != data)
+    Node* prev = NULL;
+
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->number == number) {
+        if (temp->next != NULL)
         {
-            temp = temp2;
+            head = temp->next; // Changed head    
         }
+        else
+        {
+            head = NULL;
+            return head;
+        }
+        free(temp); // free old head
+        return head;
     }
-    temp->next = temp2->next;
+
+    while (temp->number != number)
+    {
+        if (temp->next == NULL)
+            printf("ID not found\n");
+        else{
+            prev = temp;
+            temp = temp->next;}
+    }
+
     return head;
 }
-
+/*
 //search a node ✔
 void search(Node *head)
 {
@@ -85,7 +105,7 @@ void search(Node *head)
     }
     printf("entered list have %d %d\n",k,a);
     
-}
+}*/
 
 //display the nodes upto `NULL` ✔
 void Traverse(Node *head)
@@ -93,10 +113,17 @@ void Traverse(Node *head)
     Node *temp=head;
     while(temp->next!=NULL)
     {
-        printf("->%d",temp->data);
+        puts(" -------------------------------");
+        printf("|ID:\t%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
+        puts(" -------------------------------\n ");
+
         temp=temp->next;
     }
-    printf("->%d\n",temp->data); //printing the last node
+        puts(" -------------------------------");
+        printf("|ID:\t%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
+        puts(" -------------------------------\n ");
+        getchar();
+        //printing the last node
 }
 
 //free the dynamically allocated nodes ✔

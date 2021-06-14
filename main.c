@@ -14,7 +14,7 @@ int main(void)
     while(true)
     {   
         puts(" -------------------------------");
-        printf("|Enter:\t\t\t\t|\n|\tP to print all contact\t|\n|\tD to delete contact\t|\n|\tA to add new contact\t|\n|\tQ to save and quit\t|\n");
+        printf("|\t\t\t\t|\n|\tP to print all contact\t|\n|\tD to delete contact\t|\n|\tA to add new contact\t|\n|\tQ to save and quit\t|\n");
         puts(" -------------------------------\nEnter: ");
         ch = tolower(getchar());
         getchar(); // eat the trailing newline
@@ -31,15 +31,30 @@ int main(void)
             break;
         
         case 'a': ;
-            int t;
-            printf("todo: ");
-            scanf("%i",&t);
+            int number;        /*unique account number*/
+            char name[20];     /*contains name*/  
+            char phone[15];    /*contains phone number*/
+            char email[20];    /*contains email */
+            //***************************
+            printf("\nNumber: ");
+            scanf("%i",&number);
+            
+            printf("Name: ");
+            scanf("%s",name);
+            
+            printf("Phone: ");
+            scanf("%s",phone);
+
+            printf("Email: ");
+            scanf("%s",email);
+            
+            //***************************
             if (head == NULL)
             {
-                head = createNode(t);
+                head = createNode(number,name,phone,email);
             }
             else{
-                insert(t,head);
+                insert(number,name,email,phone,head);
             }
             break;
         
@@ -47,12 +62,12 @@ int main(void)
             int z;
             if (head == NULL)
             {
-                printf("contact list already empty.\n");
+                printf("contact list empty.\n");
             }
             else
             {
                 Traverse(head);
-                printf("Enter key number to delete: ");
+                printf("Enter ID number to delete: ");
                 scanf("%i",&z);
                 DELETE(z,head);
             }

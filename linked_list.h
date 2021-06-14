@@ -5,10 +5,10 @@
 typedef struct node Node;
 
 //create node for linked list
-Node* createNode(int data);
+Node* createNode(int number,char* name,char* phone, char* email);
 
 //append node 
-Node* insert(int data,Node *head);
+Node* insert(int number,char* name, char* email, char* phone,Node *head);
 
 //delete node
 Node* DELETE(int data, Node *head);
