@@ -142,3 +142,42 @@ void destroy_ll(Node *head)
     }
     free(head);
 }
+
+// modify contact function
+
+void modifycontact(Node* head)   
+{
+    int record, result;
+    Node* temp = head;
+    if(head == NULL)
+    {
+        puts("There are no contacts to modify!");
+	return;
+    }
+    
+    Traverse(head);		/* show all records */
+    printf("Enter contact account number to modify or change: ");
+    scanf("%d",&record);  /*scan user input to record*/
+
+    //todo
+}
+
+int findcontact(Node* head) /* find contact function*/
+{
+    char buff[20];
+     
+    if(head==NULL)
+	{
+        puts("There are no contacts to find!");
+	    return 1;
+    }
+    
+    printf("Enter contact name: ");
+    fflush(stdin);/*clears any text from the input stream*/
+    gets(buff);
+    
+    //todo
+    
+    printf("contact %s was not found!\n",buff);
+          return 1;
+}   
