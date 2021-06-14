@@ -63,7 +63,7 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head)
 Node* DELETE(int number, Node *head)
 {
     Node* temp = head;
-    Node* prev = NULL;
+    Node* prev = NULL; 
 
     // If head node itself holds the key to be deleted
     if (temp != NULL && temp->number == number) {
