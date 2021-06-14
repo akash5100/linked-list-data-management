@@ -24,6 +24,7 @@ int main(void)
         case 'p':
             if (head == NULL){
                 printf("Sorry, 0 contact found\n");
+                getchar();
             }
             else{
                 Traverse(head);
@@ -63,6 +64,7 @@ int main(void)
             if (head == NULL)
             {
                 printf("contact list empty.\n");
+                getchar();
             }
             else
             {
@@ -70,6 +72,7 @@ int main(void)
                 printf("Enter ID number to delete: ");
                 scanf("%i",&z);
                 DELETE(z,head);
+                printf("\nID: %i Deleted successfully\n");
             }
             break;
 
@@ -82,7 +85,8 @@ int main(void)
             break;
 
         default:
-            printf("\ninvalid input\n your input should be Q, P, A or D\n");
+            printf("\ninvalid input\n your input should be P, D, A or Q\n");
+            getchar();
             break;
         }
     }

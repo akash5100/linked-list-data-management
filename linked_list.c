@@ -114,13 +114,13 @@ void Traverse(Node *head)
     while(temp->next!=NULL)
     {
         puts(" -------------------------------");
-        printf("|ID:\t%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
+        printf("|ID:%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
         puts(" -------------------------------\n ");
 
         temp=temp->next;
     }
         puts(" -------------------------------");
-        printf("|ID:\t%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
+        printf("|ID:%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
         puts(" -------------------------------\n ");
         getchar();
         //printing the last node
