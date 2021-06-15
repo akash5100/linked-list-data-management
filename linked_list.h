@@ -36,4 +36,7 @@ void destroy_ll(Node *head);
 //modify contact
 void modifycontact(Node* head);
 
+//promt user (main menu)
+int promt_user(void);
+
 #endif

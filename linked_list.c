@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdbool.h>
 
 #include "linked_list.h"
 
@@ -92,7 +94,6 @@ Node* DELETE(int number, Node *head)
     if (temp->number == number)
     {
         prev->next = temp->next;
-        
         return head;
     }
 }
@@ -273,4 +274,103 @@ void print_contact(Node* head)
         }
     }
     return;
+}
+
+int promt_user(void)
+{
+    Node* head = NULL;
+    char ch;
+
+    while(true)
+    {   
+        //display main menu
+        puts(" ----------------------------------------");
+        printf("|\t\t\t\t\t|\n|\tP to print all contact\t\t|\n|\tD to delete contact\t\t|\n|\tA to add new contact\t\t|\n|\tS to search contact\t\t|\n|\tM to modify or change contact\t|\n|\tQ to save and quit\t\t|\n");
+        puts(" ----------------------------------------\nEnter: ");
+        ch = tolower(getchar());
+        getchar(); // eat the trailing newline
+
+        switch (ch)
+        {
+        case 'p':
+            if (head == NULL){
+                printf("Sorry, 0 contact found\n");
+                getchar();  //get char to from user to continue
+            }
+            else{
+                Traverse(head);
+            }
+            break;
+        
+        case 'a': ;
+            int number;
+            char name[MAX];     /*contains name*/  
+            char phone[MAX];    /*contains phone number*/
+            char email[MAX];    /*contains email */
+            //***************************
+            
+            //getchar();
+            printf("Name: ");
+            fgets(name,MAX, stdin);
+
+            fflush(stdin);
+            printf("Phone: ");
+            fgets(phone,MAX, stdin);
+    
+            fflush(stdin);
+            printf("Email: ");
+            fgets(email,MAX, stdin);
+            
+            //***************************
+            if (head == NULL)
+            {
+                number = 1;
+                head = createNode(number,name,phone,email);
+            }
+            else{
+
+                number = generate_UI(head);
+                head = insert(number,name,email,phone,head);
+            }
+            break;
+        
+        case 'd': ;
+            int z;
+            if (head == NULL)
+            {
+                printf("contact list empty.\n");
+                getchar(); //get char to from user to continue
+            }
+            else
+            {
+                Traverse(head);
+                printf("Enter ID number to delete: ");
+                scanf("%i",&z);
+                printf("\nID: %i Deleted successfully\n",z);
+                head = DELETE(z,head);
+            }
+            break;
+
+        case 'm':
+            modifycontact(head);
+
+        case 's':
+            print_contact(head);
+            break;
+
+        case 'q':
+            printf("\nclosing...");
+            return 0;
+            break;
+        
+        //this case fixes a bug
+        case '\n':
+            break;
+
+        default:
+            printf("\nInvalid input\n Your input should be P, D, A, S, M or Q.\n");
+            getchar();  //get char to from user to continue
+            break;
+        }
+    }
 }
