@@ -2,7 +2,7 @@
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
-
+#define MAX 30
 
 typedef struct node Node;
 
@@ -21,11 +21,19 @@ Node* DELETE(int data, Node *head);
 void search(Node *head);
 */
 
+//print particular contact
+void print_contact(Node* head);
+
+//generate UI for the user
+int generate_UI(Node* head);
 
 //print the whole node
 void Traverse(Node *head);
 
 //free the dynamic allocated 
 void destroy_ll(Node *head);
+
+//modify contact
+void modifycontact(Node* head);
 
 #endif

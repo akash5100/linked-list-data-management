@@ -8,10 +8,9 @@
 struct node
 {
     int number;        /*unique account number*/
-    char name[20];     /*contains name*/  
-    char phone[15];    /*contains phone number*/
-    char email[20];    /*contains email address*/
-    //int data;
+    char name[MAX];     /*contains name*/  
+    char phone[MAX];    /*contains phone number*/
+    char email[MAX];    /*contains email address*/
     struct node *next; 
 };
 typedef struct node Node;
@@ -56,9 +55,6 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head)
 }
 
 //delete node
-
-// not working 
-
 
 Node* DELETE(int number, Node *head)
 {
@@ -114,18 +110,17 @@ void search(Node *head)
 //display the nodes upto `NULL` ✔
 void Traverse(Node *head)
 {
-    Node *temp=head;
+    Node* temp = head;
     while(temp->next!=NULL)
     {
-        puts(" -------------------------------");
-        printf("|ID:%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
-        puts(" -------------------------------\n ");
-
+        puts("*-------------------------------");
+        printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+        puts("*-------------------------------\n ");
         temp=temp->next;
     }
-        puts(" -------------------------------");
-        printf("|ID:%i\t\t\t\t\n|\tName: %s\t\t\n|\tPhone: %s\t\n|\tEmail: %s\t\n|\t\t\t\t\n",temp->number,temp->name,temp->phone,temp->email);
-        puts(" -------------------------------\n ");
+        puts("*-------------------------------");
+        printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+        puts("*-------------------------------\n ");
         getchar();
         //printing the last node
 }
@@ -143,28 +138,61 @@ void destroy_ll(Node *head)
     free(head);
 }
 
-// modify contact function
+// modify contact
 
 void modifycontact(Node* head)   
 {
-    int record, result;
+    int record;
     Node* temp = head;
+    Node* prev= NULL; 
     if(head == NULL)
     {
         puts("There are no contacts to modify!");
-	return;
+	    return;
     }
     
     Traverse(head);		/* show all records */
-    printf("Enter contact account number to modify or change: ");
+    printf("Enter contact ID to modify or change: ");
     scanf("%d",&record);  /*scan user input to record*/
 
-    //todo
+    while (temp != NULL)
+    {
+        if (temp->number == record)
+        {
+            prev = temp;
+            break;
+        }
+        temp = temp->next;
+    }
+
+    char name[MAX];     /*contains name*/  
+    char phone[MAX];    /*contains phone number*/
+    char email[MAX];    /*contains email */
+    //***************************
+    
+    getchar();
+    printf("Name: ");
+    fgets(name,MAX, stdin);
+
+    fflush(stdin);
+    printf("Phone: ");
+    fgets(phone,MAX, stdin);
+
+    fflush(stdin);
+    printf("Email: ");
+    fgets(email,MAX, stdin);
+
+    strcpy(temp->name,name);
+    strcpy(temp->email,email);
+    strcpy(temp->phone,phone);
+    
+    printf("contact changed successfully\n");
+    return;
 }
 
 int findcontact(Node* head) /* find contact function*/
 {
-    char buff[20];
+    char buff[30];
      
     if(head==NULL)
 	{
@@ -174,10 +202,66 @@ int findcontact(Node* head) /* find contact function*/
     
     printf("Enter contact name: ");
     fflush(stdin);/*clears any text from the input stream*/
-    gets(buff);
+    fgets(buff,MAX,stdin);
     
     //todo
     
     printf("contact %s was not found!\n",buff);
           return 1;
-}   
+}
+
+
+int generate_UI(Node* head)
+{
+    int number;
+
+    Node* temp = head;
+    Node* target = NULL; // target to point the last node
+    while (temp != NULL)
+    {
+        target = temp;
+        temp = temp->next;
+    }
+    number = target->number +1;
+    
+    return number;
+}
+
+
+void print_contact(Node* head)
+{
+    Node* temp=head;
+
+    if (temp == NULL)
+    {
+        printf("0 contact found\n");
+        getchar();
+        return;
+    }
+    else
+    {
+        while (temp != NULL)
+        {
+            printf("-> %i",temp->number);
+            temp = temp->next;
+        }
+        printf("\n\n");
+        int ID;
+        printf("Enter the ID you want to print: ");
+        scanf("%d",&ID);
+        
+        temp = head;
+        while(temp != NULL)
+        {
+            if (temp->number == ID)
+            {
+                puts("*-------------------------------");
+                printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+                puts("*-------------------------------\n ");
+                getchar();
+            }
+            temp = temp->next;       
+        }
+    }
+    return;
+}
