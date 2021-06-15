@@ -24,9 +24,9 @@ int main(void)
     
     while(true)
     {   
-        puts(" -------------------------------");
-        printf("|\t\t\t\t|\n|\tP to print all contact\t|\n|\tD to delete contact\t|\n|\tA to add new contact\t|\n|\tS to search contact\t|\n|\tM to modify or change contact\t|\n|\tQ to save and quit\t|\n");
-        puts(" -------------------------------\nEnter: ");
+        puts(" ----------------------------------------");
+        printf("|\t\t\t\t\t|\n|\tP to print all contact\t\t|\n|\tD to delete contact\t\t|\n|\tA to add new contact\t\t|\n|\tS to search contact\t\t|\n|\tM to modify or change contact\t|\n|\tQ to save and quit\t\t|\n");
+        puts(" ----------------------------------------\nEnter: ");
         ch = tolower(getchar());
         getchar(); // eat the trailing newline
 

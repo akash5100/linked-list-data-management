@@ -67,7 +67,7 @@ Node* DELETE(int number, Node *head)
         {
             head = temp->next; // Changed head    
         }
-        else
+        else // if only 1 node, (if head->next == null) , then return null
         {
             head = NULL;
             return head;
@@ -79,13 +79,22 @@ Node* DELETE(int number, Node *head)
     while (temp->number != number)
     {
         if (temp->next == NULL)
-            printf("ID not found\n");
-        else{
-            prev = temp;
-            temp = temp->next;}
+            {   //if id not found in any node
+                printf("ID not found\n");
+            }
+        else
+            {
+                prev = temp;
+                temp = temp->next;
+            }
     }
-
-    return head;
+    //after above loop temp pointing our target, but double check using "if"
+    if (temp->number == number)
+    {
+        prev->next = temp->next;
+        
+        return head;
+    }
 }
 /*
 //search a node ✔
