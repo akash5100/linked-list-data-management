@@ -18,7 +18,7 @@ struct node
 typedef struct node Node;
 
 // create single node with the `next` pointer pointing `NULL` ✔
-Node* createNode(int number,char* name,char* phone, char* email)
+Node* createNode(int number,char* name,char* phone, char* email,FILE* datafile)
 {
     Node *temp= malloc(sizeof(Node));
     //check if pointer is null
@@ -33,16 +33,18 @@ Node* createNode(int number,char* name,char* phone, char* email)
     strcpy(temp->email,email);
     strcpy(temp->phone,phone);
     temp->next=NULL;
+    fprintf(datafile,"%d,%s,%s,%s\n",temp->number,temp->name,temp->phone,temp->email);
+
     return temp; //returns a pointer to a node with data and NUll pointer
 }
 
 
 // insert node
 
-Node* insert(int number,char* name, char* email, char* phone,Node *head)
+Node* insert(int number,char* name, char* email, char* phone,Node *head,FILE* datafile)
 {
     if (head == NULL)
-        return createNode(number,name,phone,email);
+        return createNode(number,name,phone,email,datafile);
         
     Node* temp = head;
     //make temp pointer point to end
@@ -50,7 +52,7 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head)
     {
         temp = temp->next;
     }
-    Node* temp2 = createNode(number,name,phone,email);
+    Node* temp2 = createNode(number,name,phone,email,datafile);
     temp->next = temp2;
 
     return head;
@@ -124,12 +126,12 @@ void Traverse(Node *head)
     while(temp->next!=NULL)
     {
         puts("*-------------------------------");
-        printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+        printf("|ID:%i\n|\tName: %s\n|\tPhone: %s\n|\tEmail: %s\n|\n",temp->number,temp->name,temp->phone,temp->email);
         puts("*-------------------------------\n ");
         temp=temp->next;
     }
         puts("*-------------------------------");
-        printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+        printf("|ID:%i\n|\tName: %s\n|\tPhone: %s\n|\tEmail: %s\n|\n",temp->number,temp->name,temp->phone,temp->email);
         puts("*-------------------------------\n ");
         getchar();
         //printing the last node
@@ -276,11 +278,35 @@ void print_contact(Node* head)
     return;
 }
 
-int promt_user(void)
+
+//promt with file handling
+int promt_user_two(void)
 {
     Node* head = NULL;
     char ch;
 
+    /*  starting file pointer   */
+    FILE *datafile = fopen("file.csv","a+");
+
+
+    if (datafile == NULL)
+    {
+        printf("unable to create file.\n");
+        exit(1);
+    }
+
+    //setting seek to starting of file '0'
+    fseek(datafile,0, SEEK_END);
+    //getting size of file in size using ftell which returns size of file 'int'
+    int size = ftell(datafile);
+    if (size == 0)
+    {
+        fprintf(datafile,"id,name,phone,email\n");
+    }
+
+
+
+    //promt user
     while(true)
     {   
         //display main menu
@@ -307,6 +333,113 @@ int promt_user(void)
             char name[MAX];     /*contains name*/  
             char phone[MAX];    /*contains phone number*/
             char email[MAX];    /*contains email */
+            //***************************//
+            
+            //getchar();
+            printf("Name: ");
+            fgets(name,MAX, stdin);
+            strtok(name, "\n"); //removing new line due to fgets
+
+            fflush(stdin);
+            printf("Phone: ");
+            fgets(phone,MAX, stdin);
+            strtok(phone, "\n");
+    
+            fflush(stdin);
+            printf("Email: ");
+            fgets(email,MAX, stdin);
+            strtok(email, "\n");
+            
+            //***************************
+            if (head == NULL)
+            {   
+                number = 1;
+                head = createNode(number,name,phone,email,datafile);
+                
+            }
+            else{
+
+                number = generate_UI(head);
+                head = insert(number,name,email,phone,head,datafile);
+            }
+            break;
+        
+        case 'd': ;
+            int z;
+            if (head == NULL)
+            {
+                printf("contact list empty.\n");
+                getchar(); //get char to from user to continue
+            }
+            else
+            {
+                Traverse(head);
+                printf("Enter ID number to delete: ");
+                scanf("%i",&z);
+                printf("\nID: %i Deleted successfully\n",z);
+                head = DELETE(z,head);
+            }
+            break;
+
+        case 'm':
+            modifycontact(head);
+
+        case 's':
+            print_contact(head);
+            break;
+
+        case 'q':
+            fclose(datafile);
+            printf("\nclosing...");
+            return 0;
+            break;
+        
+        //this case fixes a bug
+        case '\n':
+            break;
+
+        default:
+            printf("\nInvalid input\n Your input should be P, D, A, S, M or Q.\n");
+            getchar();  //get char to from user to continue
+            break;
+        }
+    }
+}
+
+
+/*
+//promt without file handling
+int promt_user(void)
+{
+    Node* head = NULL;
+    char ch;
+
+    while(true)
+    {   
+        //display main menu
+        puts(" ----------------------------------------");
+        printf("|\t\t\t\t\t|\n|\tP to print all contact\t\t|\n|\tD to delete contact\t\t|\n|\tA to add new contact\t\t|\n|\tS to search contact\t\t|\n|\tM to modify or change contact\t|\n|\tQ to save and quit\t\t|\n");
+        puts(" ----------------------------------------\nEnter: ");
+        ch = tolower(getchar());
+        getchar(); // eat the trailing newline
+
+        switch (ch) 
+        {
+        case 'p':
+            if (head == NULL){
+                printf("Sorry, 0 contact found\n");
+                getchar();  //get char to from user to continue
+            }
+            else{
+                Traverse(head);
+            }
+            break;
+        
+        case 'a': ;
+            int number;
+            char name[MAX];     
+            char phone[MAX];    
+            char email[MAX];    
             //***************************
             
             //getchar();
@@ -374,3 +507,4 @@ int promt_user(void)
         }
     }
 }
+*/

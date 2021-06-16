@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "linked_list.h"
 
+
 /*  READ ME
 *
 *
@@ -15,8 +16,5 @@
 
 int main(void)
 {   
-    //FILE *datafile;
-    //char *filename = "contactdatabase.dat";
-    //char ch;
-    return promt_user();
+    return promt_user_two();
 }
