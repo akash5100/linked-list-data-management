@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -38,9 +37,7 @@ Node* createNode(int number,char* name,char* phone, char* email,FILE* datafile)
     return temp; //returns a pointer to a node with data and NUll pointer
 }
 
-
 // insert node
-
 Node* insert(int number,char* name, char* email, char* phone,Node *head,FILE* datafile)
 {
     if (head == NULL)
@@ -59,7 +56,6 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head,FILE* da
 }
 
 //delete node
-
 Node* DELETE(int number, Node *head)
 {
     Node* temp = head;
@@ -99,25 +95,6 @@ Node* DELETE(int number, Node *head)
         return head;
     }
 }
-/*
-//search a node ✔
-void search(Node *head)
-{
-    Node *temp=head;
-    int k=0,a;
-    printf("what number you want to find\n");
-    scanf("%d",&a);
-    while(temp!=NULL)
-    {
-        if(temp->data == a)
-        {
-            k++;
-        }
-        temp=temp->next;
-    }
-    printf("entered list have %d %d\n",k,a);
-    
-}*/
 
 //display the nodes upto `NULL` ✔
 void Traverse(Node *head)
@@ -201,6 +178,7 @@ void traverse_two(void)
 }
 
 //free the dynamically allocated nodes ✔
+// not used
 void destroy_ll(Node *head)
 {
     Node *temp=head;
@@ -213,8 +191,7 @@ void destroy_ll(Node *head)
     free(head);
 }
 
-// modify contact
-
+//modify contact
 void modifycontact(Node* head)   
 {
     int record;
@@ -265,6 +242,7 @@ void modifycontact(Node* head)
     return;
 }
 
+//not used
 int findcontact(Node* head) /* find contact function*/
 {
     char buff[30];
@@ -285,7 +263,6 @@ int findcontact(Node* head) /* find contact function*/
           return 1;
 }
 
-
 int generate_UI(Node* head)
 {
     int number;
@@ -302,7 +279,7 @@ int generate_UI(Node* head)
     return number;
 }
 
-
+//not used
 void print_contact(Node* head)
 {
     Node* temp=head;
@@ -340,7 +317,6 @@ void print_contact(Node* head)
     }
     return;
 }
-
 
 //promt with file handling
 int promt_user_two(void)
@@ -471,7 +447,6 @@ int promt_user_two(void)
     }
 }
 
-
 /*
 //promt without file handling
 int promt_user(void)
@@ -574,12 +549,11 @@ int promt_user(void)
 }
 */
 
-
 //copied from test
 void read(void)
 {
     FILE* temp = fopen("file.csv","r");
-    
+
     int id;
     printf("Enter the ID you want to print: ");
     scanf("%d",&id);
@@ -644,5 +618,3 @@ void read(void)
     }
         
 }
-
-

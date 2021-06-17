@@ -16,12 +16,6 @@ Node* insert(int number,char* name, char* email, char* phone,Node *head,FILE* da
 //delete node
 Node* DELETE(int data, Node *head);
 
-/*
-* currently unused
-//search node
-void search(Node *head);
-*/
-
 //print particular contact
 void print_contact(Node* head);
 
