@@ -137,6 +137,69 @@ void Traverse(Node *head)
         //printing the last node
 }
 
+//traverse replacement
+void traverse_two(void)
+{
+    FILE* temp = fopen("file.csv","r");
+
+    if (!temp)
+        printf("Can't open file\n");
+
+    else 
+    {
+        char buffer[MAX];
+
+        int row = 0;
+        int column = 0;
+
+        while (fgets(buffer,MAX, temp)) 
+        {
+            column = 0;
+            row++;
+
+            // To avoid printing of column
+            // names in file can be changed
+            // according to need
+            if (row == 1)
+                continue;
+
+            // Splitting the data
+            char* value = strtok(buffer, ",");
+
+            while (value) {
+
+                // Column 1
+                if (column == 0) {
+                    puts("*-------------------------------");
+                    printf("|ID:");
+                }
+
+                // Column 2
+                if (column == 1) {
+                    printf("\n|\tName: ");
+                }
+
+                // Column 3
+                if (column == 2) {
+                    printf("\n|\tPhone:");
+                }
+
+                // Column 4
+                if (column == 3) {
+                    printf("\n|\tEmail:");
+                }
+
+                printf("%s", value);
+                value = strtok(NULL, ",");
+                column++;
+            }
+            printf("|\n");
+            puts("*-------------------------------\n ");
+
+        }
+    }
+}
+
 //free the dynamically allocated nodes ✔
 void destroy_ll(Node *head)
 {
@@ -268,7 +331,7 @@ void print_contact(Node* head)
             if (temp->number == ID)
             {
                 puts("*-------------------------------");
-                printf("|ID:%i\n|\tName: %s|\tPhone: %s|\tEmail: %s|\n",temp->number,temp->name,temp->phone,temp->email);
+                printf("|ID:%i\n|\tName: %s\n|\tPhone: %s\n|\tEmail: %s\n|\n",temp->number,temp->name,temp->phone,temp->email);
                 puts("*-------------------------------\n ");
                 getchar();
             }
@@ -319,13 +382,14 @@ int promt_user_two(void)
         switch (ch)
         {
         case 'p':
-            if (head == NULL){
-                printf("Sorry, 0 contact found\n");
-                getchar();  //get char to from user to continue
-            }
-            else{
-                Traverse(head);
-            }
+            traverse_two();
+            // if (head == NULL){
+            //     printf("Sorry, 0 contact found\n");
+            //     getchar();  //get char to from user to continue
+            // }
+            // else{
+            //     Traverse(head);
+            // }
             break;
         
         case 'a': ;
@@ -385,7 +449,8 @@ int promt_user_two(void)
             modifycontact(head);
 
         case 's':
-            print_contact(head);
+            //print_contact(head);
+            read();
             break;
 
         case 'q':
@@ -508,3 +573,76 @@ int promt_user(void)
     }
 }
 */
+
+
+//copied from test
+void read(void)
+{
+    FILE* temp = fopen("file.csv","r");
+    
+    int id;
+    printf("Enter the ID you want to print: ");
+    scanf("%d",&id);
+    id++;
+    if (!temp)
+    printf("Can't open file\n");
+
+    else
+    {
+        char buffer[MAX];
+
+        int row = 0;
+        int column = 0;
+
+        while (fgets(buffer,MAX, temp)) 
+        {
+            column = 0;
+            row++;
+
+            // To avoid printing of column
+            // names in file can be changed
+            // according to need
+            if(row == 1)
+                continue;
+            else if (row == id)
+            {
+                // Splitting the data
+                char* value = strtok(buffer, ",");
+                while (value) 
+                {
+                    // Column 1
+                    if (column == 0) {
+                        puts("*-------------------------------");
+                        printf("|ID:");
+                    }
+    
+                    // Column 2
+                    if (column == 1) {
+                        printf("\n|\tName: ");
+                    }
+    
+                    // Column 3
+                    if (column == 2) {
+                        printf("\n|\tPhone:");
+                    }
+
+                    // Column 4
+                    if (column == 3) {
+                        printf("\n|\tEmail:");
+                    }
+    
+                    printf("%s", value);
+                    value = strtok(NULL, ",");
+                    column++;
+                }
+                printf("|\n");
+                puts("*-------------------------------\n ");
+            }
+            else
+                continue;   
+        }
+    }
+        
+}
+
+

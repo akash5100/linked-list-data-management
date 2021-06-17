@@ -37,10 +37,16 @@ void destroy_ll(Node *head);
 //modify contact
 void modifycontact(Node* head);
 
+//read, print_contact() replacement
+void read(void);
+
 //promt user (main menu)
 int promt_user(void);
 
 //promt user 2
 int promt_user_two(void);
+
+//Traverse() replacement
+void traverse_two(void);
 
 #endif
