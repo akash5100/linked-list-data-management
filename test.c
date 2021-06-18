@@ -27,12 +27,45 @@ void write(FILE* datafile)
     int size = ftell(datafile);
     if (size == 0)
     {
-        fprintf(datafile,"name,phone,email\n");
+        fprintf(datafile,"id,name,phone,email\n");
     }
     
-    printf("enter number: ");
-    scanf("%i",&number);
-    getchar();
+    //-----------------------------------------------------------
+    FILE* temp = fopen("file.csv","a+");
+    if (!temp)
+        printf("Can't open file\n");
+    
+        char buffer[MAX];
+        int row = 0;
+        int column = 0;
+        int max=0;
+
+        while (fgets(buffer,MAX, temp)) 
+        {
+            row++;
+            if(row == 1)
+                continue;
+            else
+            {
+                // Splitting the data
+                char* value = strtok(buffer, ",");
+                while (value) 
+                {
+                    // Column 1
+                    if (column == 0) {
+                        max = row;
+                    }
+                    value = strtok(NULL, ",");
+                    //column++;
+                }
+            }   
+        }
+    //-----------------------------------------------------------
+    
+
+    // printf("enter number: ");
+    // scanf("%i",&number);
+    // getchar();
 
     printf("enter name: ");
     fgets(name,MAX,stdin);
@@ -46,7 +79,7 @@ void write(FILE* datafile)
     fgets(email,MAX,stdin);
     strtok(email, "\n");
 
-    fprintf(datafile,"%i,%s,%s,%s\n",number,name,phone,email);
+    fprintf(datafile,"%i,%s,%s,%s\n",max+1,name,phone,email);
     return;
 }
 
@@ -196,10 +229,10 @@ int main (void)
     datafile = fopen("file.csv","a+");
 
     //writing file
-   // write(datafile);
+    write(datafile);
 
     //readingfile
-    read(datafile);
+    //read(datafile);
 
     //closing file
     fclose(datafile);

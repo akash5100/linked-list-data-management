@@ -32,7 +32,40 @@ Node* createNode(int number,char* name,char* phone, char* email,FILE* datafile)
     strcpy(temp->email,email);
     strcpy(temp->phone,phone);
     temp->next=NULL;
-    fprintf(datafile,"%d,%s,%s,%s\n",temp->number,temp->name,temp->phone,temp->email);
+
+    //--------------------------------------------------------
+    FILE* file = fopen("file.csv","a+");
+    if (!file)
+        printf("Can't open file\n");
+    
+        char buffer[MAX];
+        int row = 0;
+        int column = 0;
+        int max=0;
+
+        while (fgets(buffer,MAX, file)) 
+        {
+            row++;
+            if(row == 1)
+                continue;
+            else
+            {
+                // Splitting the data
+                char* value = strtok(buffer, ",");
+                while (value) 
+                {
+                    // Column 1
+                    if (column == 0) {
+                        max = row;
+                    }
+                    value = strtok(NULL, ",");
+                }
+            }   
+        }
+    //--------------------------------------------------------    
+    if (max == 0)
+        max = 1;
+    fprintf(datafile,"%d,%s,%s,%s\n",max,temp->name,temp->phone,temp->email);
 
     return temp; //returns a pointer to a node with data and NUll pointer
 }
@@ -125,7 +158,6 @@ void traverse_two(void)
     else 
     {
         char buffer[MAX];
-
         int row = 0;
         int column = 0;
 
@@ -134,9 +166,6 @@ void traverse_two(void)
             column = 0;
             row++;
 
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
             if (row == 1)
                 continue;
 
@@ -148,7 +177,7 @@ void traverse_two(void)
                 // Column 1
                 if (column == 0) {
                     puts("*-------------------------------");
-                    printf("|ID:");
+                    printf("|\tID: ");
                 }
 
                 // Column 2
@@ -179,17 +208,17 @@ void traverse_two(void)
 
 //free the dynamically allocated nodes ✔
 // not used
-void destroy_ll(Node *head)
-{
-    Node *temp=head;
-    while(temp->next!=NULL)
-    {
-        head= head->next;
-        free(temp);
-        temp=head;
-    }
-    free(head);
-}
+// void destroy_ll(Node *head)
+// {
+//     Node *temp=head;
+//     while(temp->next!=NULL)
+//     {
+//         head= head->next;
+//         free(temp);
+//         temp=head;
+//     }
+//     free(head);
+// }
 
 //modify contact
 void modifycontact(Node* head)   
@@ -368,6 +397,7 @@ int promt_user_two(void)
             // }
             break;
         
+        //save after adding each contact due to bug
         case 'a': ;
             int number;
             char name[MAX];     /*contains name*/  
@@ -395,10 +425,8 @@ int promt_user_two(void)
             {   
                 number = 1;
                 head = createNode(number,name,phone,email,datafile);
-                
             }
             else{
-
                 number = generate_UI(head);
                 head = insert(number,name,email,phone,head,datafile);
             }
@@ -447,12 +475,31 @@ int promt_user_two(void)
     }
 }
 
-/*
+
 //promt without file handling
 int promt_user(void)
-{
+{   
     Node* head = NULL;
     char ch;
+
+    /*  starting file pointer   */
+    FILE *datafile = fopen("file.csv","a+");
+
+
+    if (datafile == NULL)
+    {
+        printf("unable to create file.\n");
+        exit(1);
+    }
+
+    //setting seek to starting of file '0'
+    fseek(datafile,0, SEEK_END);
+    //getting size of file in size using ftell which returns size of file 'int'
+    int size = ftell(datafile);
+    if (size == 0)
+    {
+        fprintf(datafile,"id,name,phone,email\n");
+    }
 
     while(true)
     {   
@@ -485,25 +532,28 @@ int promt_user(void)
             //getchar();
             printf("Name: ");
             fgets(name,MAX, stdin);
+            strtok(name, "\n"); //removing new line due to fgets
 
             fflush(stdin);
             printf("Phone: ");
             fgets(phone,MAX, stdin);
+            strtok(phone, "\n");
     
             fflush(stdin);
             printf("Email: ");
             fgets(email,MAX, stdin);
+            strtok(email, "\n");
             
             //***************************
             if (head == NULL)
             {
                 number = 1;
-                head = createNode(number,name,phone,email);
+                head = createNode(number,name,phone,email,datafile);
             }
             else{
 
                 number = generate_UI(head);
-                head = insert(number,name,email,phone,head);
+                head = insert(number,name,email,phone,head,datafile);
             }
             break;
         
@@ -547,7 +597,7 @@ int promt_user(void)
         }
     }
 }
-*/
+
 
 //copied from test
 void read(void)
